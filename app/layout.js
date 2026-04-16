@@ -4,7 +4,7 @@ import Footer from '../components/Footer';
 import CookieModal from '../components/CookieModal';
 import CookieBanner from '../components/CookieBanner';
 
-const SITE_URL = 'https://www.arkplatforms.com';
+const SITE_URL = 'https://www.arkplatforms.eu';
 
 export const metadata = {
   metadataBase: new URL(SITE_URL),
@@ -66,7 +66,7 @@ const organizationJsonLd = {
   logo: `${SITE_URL}/logo.png`,
   description:
     'Multidisciplinary studio for software, design, real estate, hospitality, finance, audits, and education.',
-  email: 'hello@arkplatforms.com',
+  email: 'hello@arkplatforms.eu',
   foundingDate: '2016',
   sameAs: [
     'https://www.linkedin.com/company/arkplatforms',
@@ -77,7 +77,7 @@ const organizationJsonLd = {
   contactPoint: {
     '@type': 'ContactPoint',
     contactType: 'customer service',
-    email: 'hello@arkplatforms.com',
+    email: 'hello@arkplatforms.eu',
     availableLanguage: ['English', 'Spanish'],
   },
 };

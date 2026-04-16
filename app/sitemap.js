@@ -1,6 +1,6 @@
 import { posts } from '../lib/posts';
 
-const SITE = 'https://www.arkplatforms.com';
+const SITE = 'https://www.arkplatforms.eu';
 
 export default function sitemap() {
   const now = new Date();

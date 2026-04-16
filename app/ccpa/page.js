@@ -105,7 +105,7 @@ export default function CCPACompliance() {
           </p>
           <div style={{ background: '#f5f5f5', padding: 24, borderRadius: 8, marginBottom: 24, maxWidth: 600 }}>
             <p style={{ color: '#5a5a5a', fontSize: 15, lineHeight: 1.8, margin: 0 }}>
-              <strong>Email:</strong> privacy@arkplatforms.com<br />
+              <strong>Email:</strong> privacy@arkplatforms.eu<br />
               <strong>Mail:</strong> ARK Platforms, Inc, Privacy Team, [Address]<br />
               <strong>Web Form:</strong> Use our privacy request form on our website
             </p>

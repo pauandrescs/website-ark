@@ -11,7 +11,7 @@ export default function Footer() {
             <p>A multidisciplinary studio engineering software, spaces, and strategies for clients who expect nothing less than excellence.</p>
             <div style={{ marginTop: 24, lineHeight: 1.7, color: '#bfbab0' }}>
               <strong>Contact</strong>
-              <div>info@arkplatforms.com</div>
+              <div>info@arkplatforms.eu</div>
               <div>+34 91 123 4567</div>
               <div>Madrid · Lisboa · London</div>
             </div>
@@ -20,11 +20,11 @@ export default function Footer() {
             <h4>Technology</h4>
             <ul>
               <li><Link href="/software">Software Development</Link></li>
-              <li><Link href="/software#apps">Mobile Apps</Link></li>
-              <li><Link href="/software#web">Web Platforms</Link></li>
-              <li><Link href="/design">UI / UX Design</Link></li>
-              <li><Link href="/software">AI & Automation</Link></li>
-              <li><Link href="/software">Infrastructure & DevOps</Link></li>
+              <li><Link href="/apps">Mobile Apps</Link></li>
+              <li><Link href="/webs">Web Platforms</Link></li>
+              <li><Link href="/uiux">UI / UX Design</Link></li>
+              <li><Link href="/ai-automation">AI & Automation</Link></li>
+              <li><Link href="/infrastructure">Infrastructure & DevOps</Link></li>
             </ul>
           </div>
           <div className="footer-col">

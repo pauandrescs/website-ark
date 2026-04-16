@@ -83,7 +83,7 @@ export default function Header() {
               <Link href="/register" className="btn-primary">Join ARK</Link>
               <Link href="/login" className="btn-ghost" style={{ margin: 0 }}>Sign In</Link>
             </div>
-            <p className="mobile-menu-contact">hello@arkplatforms.com</p>
+            <p className="mobile-menu-contact">hello@arkplatforms.eu</p>
           </div>
         </div>
       </div>

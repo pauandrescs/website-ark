@@ -164,7 +164,7 @@ export default function TermsOfService() {
     {
       num: '32',
       title: 'Contact and Support',
-      content: 'For questions regarding these Terms and Conditions or requests for clarification, please contact ARK Platforms, Inc at info@arkplatforms.com or through the contact form on our website. Our team will respond to inquiries within two (2) business days. We maintain a comprehensive FAQ section addressing common questions about our services and terms.',
+      content: 'For questions regarding these Terms and Conditions or requests for clarification, please contact ARK Platforms, Inc at info@arkplatforms.eu or through the contact form on our website. Our team will respond to inquiries within two (2) business days. We maintain a comprehensive FAQ section addressing common questions about our services and terms.',
     },
   ];
 

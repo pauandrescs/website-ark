@@ -47,9 +47,9 @@ export default function Contact() {
           <div className="section-eyebrow">Direct Lines</div>
           <h2 style={{ marginBottom: 40 }}>Prefer a direct channel?</h2>
           <div className="stats" style={{ gridTemplateColumns: 'repeat(3,1fr)'}}>
-            <div><div className="stat-label" style={{marginBottom:12}}>General</div><div style={{fontFamily:'Didot,serif',fontSize:22,color:'var(--ark-ivory)'}}>hello@arkplatforms.com</div></div>
-            <div><div className="stat-label" style={{marginBottom:12}}>New Business</div><div style={{fontFamily:'Didot,serif',fontSize:22,color:'var(--ark-ivory)'}}>partners@arkplatforms.com</div></div>
-            <div><div className="stat-label" style={{marginBottom:12}}>Press</div><div style={{fontFamily:'Didot,serif',fontSize:22,color:'var(--ark-ivory)'}}>press@arkplatforms.com</div></div>
+            <div><div className="stat-label" style={{marginBottom:12}}>General</div><div style={{fontFamily:'Didot,serif',fontSize:22,color:'var(--ark-ivory)'}}>hello@arkplatforms.eu</div></div>
+            <div><div className="stat-label" style={{marginBottom:12}}>New Business</div><div style={{fontFamily:'Didot,serif',fontSize:22,color:'var(--ark-ivory)'}}>partners@arkplatforms.eu</div></div>
+            <div><div className="stat-label" style={{marginBottom:12}}>Press</div><div style={{fontFamily:'Didot,serif',fontSize:22,color:'var(--ark-ivory)'}}>press@arkplatforms.eu</div></div>
           </div>
         </div>
       </section>

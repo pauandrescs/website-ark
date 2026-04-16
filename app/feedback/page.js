@@ -169,7 +169,7 @@ export default function ReportIssue() {
                   name="url"
                   value={formData.url}
                   onChange={handleChange}
-                  placeholder="https://arkplatforms.com/page"
+                  placeholder="https://arkplatforms.eu/page"
                   style={{
                     width: '100%',
                     padding: '12px 14px',

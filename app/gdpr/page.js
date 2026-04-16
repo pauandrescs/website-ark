@@ -106,7 +106,7 @@ export default function GDPRCompliance() {
           <div className="section-eyebrow">Exercise Your Rights</div>
           <h2 style={{ marginBottom: 24, color: 'var(--ark-ivory)' }}>Contact our Data Protection Officer</h2>
           <p style={{ fontSize: 17, color: '#bfbab0', marginBottom: 40 }}>
-            To exercise your GDPR rights or lodge a complaint, contact our Data Protection Officer at dpo@arkplatforms.com or through our contact form.
+            To exercise your GDPR rights or lodge a complaint, contact our Data Protection Officer at dpo@arkplatforms.eu or through our contact form.
           </p>
           <div style={{ display: 'flex', gap: 20, justifyContent: 'center', flexWrap: 'wrap' }}>
             <Link href="/contact" className="btn-primary">Contact DPO</Link>

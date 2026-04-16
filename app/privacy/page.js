@@ -124,7 +124,7 @@ export default function PrivacyPolicy() {
     {
       num: '24',
       title: 'Data Protection Officer',
-      content: 'ARK Platforms, Inc has appointed a Data Protection Officer (DPO) responsible for supervising compliance with privacy regulations, monitoring our data protection activities, and acting as a contact point for user inquiries and complaints regarding privacy. The DPO can be contacted at dpo@arkplatforms.com for any privacy-related concerns.',
+      content: 'ARK Platforms, Inc has appointed a Data Protection Officer (DPO) responsible for supervising compliance with privacy regulations, monitoring our data protection activities, and acting as a contact point for user inquiries and complaints regarding privacy. The DPO can be contacted at dpo@arkplatforms.eu for any privacy-related concerns.',
     },
     {
       num: '25',
@@ -189,7 +189,7 @@ export default function PrivacyPolicy() {
     {
       num: '37',
       title: 'User Complaint Procedures',
-      content: 'Users can file complaints with ARK Platforms, Inc regarding any perceived violation of their privacy rights. Complaints should be submitted in writing to privacy@arkplatforms.com. Users also have the right to lodge complaints with the relevant data protection authority in their jurisdiction if they believe their rights have been violated.',
+      content: 'Users can file complaints with ARK Platforms, Inc regarding any perceived violation of their privacy rights. Complaints should be submitted in writing to privacy@arkplatforms.eu. Users also have the right to lodge complaints with the relevant data protection authority in their jurisdiction if they believe their rights have been violated.',
     },
     {
       num: '38',
@@ -290,7 +290,7 @@ export default function PrivacyPolicy() {
           <div className="section-eyebrow">Your Privacy Matters</div>
           <h2 style={{ marginBottom: 24, color: 'var(--ark-ivory)' }}>We protect your data with the highest standards.</h2>
           <p style={{ fontSize: 17, color: '#bfbab0', marginBottom: 40 }}>
-            If you have questions about this Privacy Policy or concerns about your data, contact our Data Protection Officer at dpo@arkplatforms.com or use the form below. We respond to all inquiries within 30 days.
+            If you have questions about this Privacy Policy or concerns about your data, contact our Data Protection Officer at dpo@arkplatforms.eu or use the form below. We respond to all inquiries within 30 days.
           </p>
           <div style={{ display: 'flex', gap: 20, justifyContent: 'center', flexWrap: 'wrap' }}>
             <Link href="/contact" className="btn-primary">Contact Us</Link>

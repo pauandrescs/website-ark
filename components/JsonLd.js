@@ -7,7 +7,7 @@ export default function JsonLd({ data }) {
   );
 }
 
-export const SITE_URL = 'https://www.arkplatforms.com';
+export const SITE_URL = 'https://www.arkplatforms.eu';
 
 export const breadcrumbJsonLd = (items) => ({
   '@context': 'https://schema.org',
