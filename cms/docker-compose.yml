@@ -1,0 +1,97 @@
+version: '3.8'
+
+services:
+  # PostgreSQL Database
+  postgres:
+    image: postgres:15-alpine
+    container_name: ark-postgres
+    environment:
+      POSTGRES_USER: ${DB_USER:-postgres}
+      POSTGRES_PASSWORD: ${DB_PASSWORD:-postgres}
+      POSTGRES_DB: ${DB_NAME:-ark_cms}
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${DB_USER:-postgres}"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    networks:
+      - ark-network
+
+  # Redis Cache
+  redis:
+    image: redis:7-alpine
+    container_name: ark-redis
+    ports:
+      - "6379:6379"
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    volumes:
+      - redis_data:/data
+    networks:
+      - ark-network
+
+  # ARK CMS (Development)
+  cms:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: ark-cms
+    ports:
+      - "3000:3000"
+    environment:
+      DATABASE_URL: "postgresql://${DB_USER:-postgres}:${DB_PASSWORD:-postgres}@postgres:5432/${DB_NAME:-ark_cms}"
+      REDIS_URL: "redis://redis:6379"
+      AUTH_SECRET: ${AUTH_SECRET:-change-me-with-openssl-rand-base64-32}
+      REVALIDATE_SECRET: ${REVALIDATE_SECRET:-change-me-with-random-string}
+      NODE_ENV: ${NODE_ENV:-development}
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    networks:
+      - ark-network
+    profiles:
+      - cms
+
+  # CMS Dev Server (for development with hot reload)
+  cms-dev:
+    build:
+      context: .
+      dockerfile: Dockerfile.dev
+    container_name: ark-cms-dev
+    ports:
+      - "3000:3000"
+    volumes:
+      - .:/app
+      - /app/node_modules
+    environment:
+      DATABASE_URL: "postgresql://${DB_USER:-postgres}:${DB_PASSWORD:-postgres}@postgres:5432/${DB_NAME:-ark_cms}"
+      REDIS_URL: "redis://redis:6379"
+      AUTH_SECRET: ${AUTH_SECRET:-change-me-with-openssl-rand-base64-32}
+      REVALIDATE_SECRET: ${REVALIDATE_SECRET:-change-me-with-random-string}
+      NODE_ENV: development
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    networks:
+      - ark-network
+    profiles:
+      - dev
+
+volumes:
+  postgres_data:
+  redis_data:
+
+networks:
+  ark-network:
+    driver: bridge
