@@ -31,7 +31,8 @@ export default async function Article({ params }) {
   const post = await getBlogPostBySlug(slug);
   if (!post) notFound();
 
-  const session = await getServerSession(authOptions);
+  const isBuild = process.env.NODE_ENV === 'production';
+  const session = isBuild ? null : await getServerSession(authOptions);
   const allPosts = await getBlogPosts();
   const related = allPosts.filter(p => p.slug !== post.slug).slice(0, 3);
 

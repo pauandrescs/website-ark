@@ -66,14 +66,18 @@ export default function Hotels() {
   const cursorRef = useRef(null);
 
   useEffect(() => {
+    if (!containerRef.current) return;
+
     const ctx = gsap.context(() => {
       // 1. Custom Spotlight Cursor
       const cursor = cursorRef.current;
       if (typeof window !== 'undefined' && window.innerWidth > 1024 && cursor) {
         gsap.set(cursor, { display: 'block' });
-        window.addEventListener("mousemove", (e) => {
+        const onMouseMove = (e) => {
           gsap.to(cursor, { x: e.clientX, y: e.clientY, duration: 0.8, ease: "power2.out" });
-        });
+        };
+        window.addEventListener("mousemove", onMouseMove);
+        return () => window.removeEventListener("mousemove", onMouseMove);
       }
 
       // 2. ULTRA-DYNAMIC HERO ANIMATION
@@ -109,13 +113,15 @@ export default function Hotels() {
           .to(title, { fill: "white", duration: 1.2 }, "-=1");
         }
 
-        gsap.from(card, {
-          y: 50,
-          opacity: 0,
-          duration: 1.8,
-          ease: "power3.out",
-          scrollTrigger: { trigger: sec, start: "top 80%" }
-        });
+        if (card) {
+          gsap.from(card, {
+            y: 50,
+            opacity: 0,
+            duration: 1.8,
+            ease: "power3.out",
+            scrollTrigger: { trigger: sec, start: "top 80%" }
+          });
+        }
       });
 
       ScrollTrigger.refresh();
