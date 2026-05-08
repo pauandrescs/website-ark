@@ -106,7 +106,9 @@ export const authOptions = {
     signIn: '/login',
     error: '/login',
   },
-  secret: process.env.NEXTAUTH_SECRET,
+  // Hardcoded fallback to prevent crash in production environments without env vars.
+  // IMPORTANT: You should still set a real NEXTAUTH_SECRET in Vercel settings.
+  secret: process.env.NEXTAUTH_SECRET || 'ark-emergency-secret-key-666-999-manifesto',
 };
 
 const handler = NextAuth(authOptions);
