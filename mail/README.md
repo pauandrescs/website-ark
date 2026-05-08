@@ -5,7 +5,7 @@ Private business email infrastructure as a service (MPaaS).
 ## Architecture
 
 - **Backend**: Rust + Axum + PostgreSQL
-- **Mail Engine**: Mailcow (containerized)
+- **Mail Engine**: Mailcow (external service, NOT containerized)
 - **Auth**: JWT tokens
 - **API**: REST v1
 
@@ -13,29 +13,39 @@ Private business email infrastructure as a service (MPaaS).
 
 ### Prerequisites
 - Docker & Docker Compose
-- Rust 1.75+
-- PostgreSQL 16
+- Rust 1.75+ (for local dev)
+- PostgreSQL 16 (via Docker or local)
+- Mailcow instance (external, separate setup)
 
 ### Setup
 
-1. Clone & setup env:
+1. Setup env:
 ```bash
 cp .env.example .env
+# Update .env with your Mailcow API URL and key
 ```
 
-2. Build & run:
+2. Build & run backend + database:
 ```bash
 docker-compose up --build
 ```
 
-3. Apply migrations:
+3. Run migrations:
 ```bash
 sqlx migrate run
 ```
 
 4. Test API:
 ```bash
+# Get JWT token
+TOKEN=$(curl -s -X POST http://localhost:3000/api/v1/auth/login \
+  -H "Content-Type: application/json" \
+  -d '{"company_id":"550e8400-e29b-41d4-a716-446655440000"}' \
+  | jq -r '.token')
+
+# Create company
 curl -X POST http://localhost:3000/api/v1/companies \
+  -H "Authorization: Bearer $TOKEN" \
   -H "Content-Type: application/json" \
   -d '{"name":"Test Co","owner_email":"owner@test.com"}'
 ```
@@ -96,7 +106,9 @@ docker-compose logs -f backend
 
 ## Notes
 
-- The platform uses Mailcow's REST API for email operations
+- **Mailcow is external**: This backend orchestrates a separate Mailcow instance
+- Configure `MAILCOW_API_URL` and `MAILCOW_API_KEY` in `.env`
 - DNS records are generated but NOT verified automatically
 - All endpoints except `/health` and `/auth/login` require JWT auth
 - Passwords are hashed with bcrypt before storage
+- Database migrations run on startup (requires sqlx-cli)

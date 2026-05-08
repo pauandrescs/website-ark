@@ -1,6 +1,7 @@
 'use client';
 import { useState } from 'react';
 import Link from 'next/link';
+import { submitContribution } from '@/lib/actions';
 
 export default function Contribute() {
   const [form, setForm] = useState({
@@ -12,8 +13,16 @@ export default function Contribute() {
   async function handleSubmit(e) {
     e.preventDefault();
     setStatus('loading');
-    await new Promise(r => setTimeout(r, 800));
-    setStatus('success');
+    
+    const result = await submitContribution(form);
+    
+    if (result.success) {
+      setStatus('success');
+      setForm({ name: '', email: '', role: '', link: '', topic: '', pitch: '' });
+    } else {
+      setStatus('error');
+      alert('Error sending pitch. Please try again later.');
+    }
   }
 
   return (

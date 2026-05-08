@@ -1,6 +1,6 @@
 import './globals.css';
-import Header from '../components/Header';
-import Footer from '../components/Footer';
+import ConditionalHeader from '../components/ConditionalHeader';
+import ConditionalFooter from '../components/ConditionalFooter';
 import CookieModal from '../components/CookieModal';
 import CookieBanner from '../components/CookieBanner';
 
@@ -78,25 +78,76 @@ const organizationJsonLd = {
     '@type': 'ContactPoint',
     contactType: 'customer service',
     email: 'hello@arkplatforms.eu',
-    availableLanguage: ['English', 'Spanish'],
+    availableLanguage: ['English', 'Spanish', 'German', 'French', 'Norwegian'],
   },
 };
 
-export default function RootLayout({ children }) {
+import { getServerSession } from 'next-auth';
+import { authOptions } from './api/auth/[...nextauth]/route';
+import Providers from '../components/Providers';
+import Script from 'next/script';
+
+export default async function RootLayout({ children }) {
+  const session = await getServerSession(authOptions);
+
   return (
-    <html lang="en">
+    <html lang="en" suppressHydrationWarning data-scroll-behavior="smooth">
       <head>
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
+        <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Playfair+Display:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet" />
+        <script
+          async
+          src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-XXXXXXXXXXXXXXXX"
+          crossOrigin="anonymous"
+        ></script>
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationJsonLd) }}
         />
       </head>
-      <body>
-        <Header />
-        <main>{children}</main>
-        <Footer />
-        <CookieModal />
-        <CookieBanner />
+      <body suppressHydrationWarning>
+        <Providers session={session}>
+          <ConditionalHeader />
+          <main>{children}</main>
+          <ConditionalFooter />
+          <CookieModal />
+          <CookieBanner />
+        </Providers>
+        <Script id="reveal-animations" strategy="afterInteractive">
+          {`
+            const observerOptions = { threshold: 0.1, rootMargin: '0px 0px -50px 0px' };
+            const observer = new IntersectionObserver((entries) => {
+              entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                  entry.target.classList.add('active');
+                  observer.unobserve(entry.target);
+                }
+              });
+            }, observerOptions);
+
+            const observeElements = () => {
+              document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+            };
+
+            if (document.readyState === 'loading') {
+              document.addEventListener('DOMContentLoaded', observeElements);
+            } else {
+              observeElements();
+            }
+
+            // Handle Next.js route changes
+            const targetNode = document.querySelector('body');
+            const config = { childList: true, subtree: true };
+            const callback = (mutationsList) => {
+              for(const mutation of mutationsList) {
+                if (mutation.type === 'childList') observeElements();
+              }
+            };
+            const mutationObserver = new MutationObserver(callback);
+            mutationObserver.observe(targetNode, config);
+          `}
+        </Script>
       </body>
     </html>
   );

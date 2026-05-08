@@ -2,6 +2,7 @@
 import Link from 'next/link';
 import { useState, useEffect } from 'react';
 import { usePathname } from 'next/navigation';
+import { signOut, useSession } from 'next-auth/react';
 
 const PRIMARY_NAV = [
   { href: '/software', label: 'Software' },
@@ -12,6 +13,7 @@ const PRIMARY_NAV = [
   { href: '/audits', label: 'Audits' },
   { href: '/courses', label: 'Courses' },
 ];
+
 const SECONDARY_NAV = [
   { href: '/blog', label: 'Journal' },
   { href: '/authors', label: 'Contributors' },
@@ -21,6 +23,7 @@ const SECONDARY_NAV = [
 ];
 
 export default function Header() {
+  const { data: session } = useSession();
   const [open, setOpen] = useState(false);
   const pathname = usePathname();
 
@@ -32,8 +35,8 @@ export default function Header() {
 
   return (
     <>
-      <header className="header">
-        <div className="header-inner">
+      <header className="header" suppressHydrationWarning>
+        <div className="header-inner" suppressHydrationWarning>
           <Link href="/" className="logo">ARK<span> </span>PLATFORMS</Link>
 
           <nav className="nav">
@@ -41,7 +44,13 @@ export default function Header() {
           </nav>
 
           <div className="header-right">
-            <Link href="/register" className="header-cta desktop-only">Join ARK</Link>
+            {session ? (
+              <div style={{ display: 'flex', alignItems: 'center', gap: 16 }}>
+                <Link href="/dashboard" className="header-cta desktop-only">Dashboard</Link>
+              </div>
+            ) : (
+              <Link href="/login" className="header-cta desktop-only">Sign In</Link>
+            )}
             <button
               className="hamburger"
               aria-label="Toggle menu"
@@ -80,8 +89,17 @@ export default function Header() {
 
           <div className="mobile-menu-footer">
             <div style={{ display: 'flex', gap: 12, flexWrap: 'wrap' }}>
-              <Link href="/register" className="btn-primary">Join ARK</Link>
-              <Link href="/login" className="btn-ghost" style={{ margin: 0 }}>Sign In</Link>
+              {session ? (
+                <div style={{ display: 'flex', flexDirection: 'column', gap: 12, width: '100%' }}>
+                  <Link href="/dashboard" className="btn-primary" style={{ width: '100%', textAlign: 'center' }}>Dashboard</Link>
+                  <button onClick={() => signOut()} className="btn-ghost" style={{ width: '100%', margin: 0 }}>Sign Out</button>
+                </div>
+              ) : (
+                <>
+                  <Link href="/register" className="btn-primary">Join ARK</Link>
+                  <Link href="/login" className="btn-ghost" style={{ margin: 0 }}>Sign In</Link>
+                </>
+              )}
             </div>
             <p className="mobile-menu-contact">hello@arkplatforms.eu</p>
           </div>

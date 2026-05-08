@@ -1,8 +1,6 @@
-FROM rust:1.75-alpine AS builder
+FROM rust:1.82-bullseye AS builder
 
 WORKDIR /build
-
-RUN apk add --no-cache musl-dev openssl-dev
 
 COPY Cargo.* ./
 COPY src ./src
@@ -10,9 +8,9 @@ COPY migrations ./migrations
 
 RUN cargo build --release
 
-FROM alpine:latest
+FROM debian:bookworm-slim
 
-RUN apk add --no-cache ca-certificates
+RUN apt-get update && apt-get install -y ca-certificates libssl3 && rm -rf /var/lib/apt/lists/*
 
 WORKDIR /app
 

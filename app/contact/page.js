@@ -1,5 +1,7 @@
 export const metadata = { title: 'Contact — ARK Platforms' };
 
+import { submitContactForm } from '@/lib/actions';
+
 export default function Contact() {
   return (
     <>
@@ -13,18 +15,18 @@ export default function Contact() {
       </section>
 
       <section className="section" style={{ background: '#fff' }}>
-        <form className="contact-form">
+        <form className="contact-form" action={submitContactForm}>
           <label>Full Name</label>
-          <input type="text" placeholder="Your name" required />
+          <input type="text" name="name" placeholder="Your name" required />
 
           <label>Email</label>
-          <input type="email" placeholder="you@company.com" required />
+          <input type="email" name="email" placeholder="you@company.com" required />
 
           <label>Company (optional)</label>
-          <input type="text" placeholder="Company or organization" />
+          <input type="text" name="company" placeholder="Company or organization" />
 
           <label>Area of Interest</label>
-          <select>
+          <select name="interest">
             <option>Software Development</option>
             <option>UI / UX Design</option>
             <option>Real Estate</option>
@@ -36,7 +38,7 @@ export default function Contact() {
           </select>
 
           <label>Tell us about your project</label>
-          <textarea placeholder="A short outline is enough." />
+          <textarea name="message" placeholder="A short outline is enough." required />
 
           <button type="submit" className="btn-primary" style={{background:'var(--ark-black)',color:'var(--ark-ivory)'}}>Send Message</button>
         </form>

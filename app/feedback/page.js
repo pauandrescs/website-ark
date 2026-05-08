@@ -2,6 +2,7 @@
 
 import Link from 'next/link';
 import { useState } from 'react';
+import { submitFeedbackForm } from '@/lib/actions';
 
 export default function ReportIssue() {
   const [formData, setFormData] = useState({
@@ -19,19 +20,25 @@ export default function ReportIssue() {
     setFormData(prev => ({ ...prev, [name]: value }));
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    // Here you would typically send the form data to your backend
-    setSubmitted(true);
-    setFormData({
-      name: '',
-      email: '',
-      issueType: 'accessibility',
-      severity: 'medium',
-      description: '',
-      url: '',
-    });
-    setTimeout(() => setSubmitted(false), 4000);
+    
+    const result = await submitFeedbackForm(formData);
+    
+    if (result.success) {
+      setSubmitted(true);
+      setFormData({
+        name: '',
+        email: '',
+        issueType: 'accessibility',
+        severity: 'medium',
+        description: '',
+        url: '',
+      });
+      setTimeout(() => setSubmitted(false), 4000);
+    } else {
+      alert('Error sending report. Please try again later.');
+    }
   };
 
   return (

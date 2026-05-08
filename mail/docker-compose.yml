@@ -1,5 +1,3 @@
-version: '3.8'
-
 services:
   postgres:
     image: postgres:16-alpine
@@ -19,33 +17,6 @@ services:
       interval: 10s
       timeout: 5s
       retries: 5
-
-  mailcow:
-    image: mailcow/mailcow-dockerized:latest
-    container_name: ark_mail_mailcow
-    environment:
-      POSTGRES_HOST: postgres
-      POSTGRES_DB: mailcow
-      POSTGRES_USER: mailcow
-      POSTGRES_PASSWORD: mailcow_password
-      MAILCOW_HOSTNAME: mail.ark.local
-      LOG_LINES: 9999
-    ports:
-      - "8080:8080"
-      - "25:25"
-      - "110:110"
-      - "143:143"
-      - "465:465"
-      - "587:587"
-      - "993:993"
-      - "995:995"
-    volumes:
-      - mailcow_data:/var/lib/docker/volumes
-    networks:
-      - mail_net
-    depends_on:
-      postgres:
-        condition: service_healthy
 
   backend:
     build:
@@ -69,7 +40,6 @@ services:
 
 volumes:
   postgres_data:
-  mailcow_data:
 
 networks:
   mail_net:

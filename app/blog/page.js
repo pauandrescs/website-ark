@@ -1,40 +1,41 @@
 import Link from 'next/link';
-import { posts } from '../../lib/posts';
+import { getBlogPosts } from '../../lib/actions';
+import { submitNewsletter } from '../../lib/actions';
 
 export const metadata = { title: 'Journal — ARK Platforms' };
 
-export default function Blog() {
-  const featured = posts.find(p => p.featured) || posts[0];
-  const rest = posts.filter(p => p.slug !== featured.slug);
+export default async function Blog() {
+  const posts = await getBlogPosts();
+  
+  if (!posts || posts.length === 0) {
+    return (
+      <div style={{ minHeight: '100vh', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+        <p>Initializing Journal assets...</p>
+      </div>
+    );
+  }
 
   return (
     <>
-      <section className="page-hero" style={{ height: '50vh', minHeight: 380 }}>
-        <div className="page-hero-bg" style={{ backgroundImage: `url(https://images.unsplash.com/photo-1455390582262-044cdead277a?auto=format&fit=crop&w=2400&q=80)` }} />
-        <div className="page-hero-content">
-          <div className="hero-eyebrow">The ARK Journal</div>
-          <h1>Notes from the practice.</h1>
-          <p>Essays, field notes, and occasional opinions from our partners and operators — published when we have something to say, and not before.</p>
-        </div>
-      </section>
-
-      <section className="section" style={{ background: '#fff' }}>
+      <section className="section" style={{ paddingTop: 160 }}>
         <div className="section-inner">
-          <Link href={`/blog/${featured.slug}`} className="blog-card blog-featured">
-            <div className="blog-card-image" style={{ backgroundImage: `url(${featured.cover})` }} />
-            <div>
-              <div className="blog-card-meta">{featured.category} — {featured.date} — {featured.readTime}</div>
-              <h3>{featured.title}</h3>
-              <p style={{ marginTop: 18 }}>{featured.excerpt}</p>
-              <span className="portfolio-card-more" style={{ marginTop: 26 }}>Read Essay</span>
-            </div>
-          </Link>
+          <div className="section-eyebrow">The ARK Journal</div>
+          <h2>Notes from the field.</h2>
+          <p className="section-lede">
+            Essays on technology, architecture, and the pursuit of longevity in business. 
+            Strategic intelligence for the discerning operator.
+          </p>
 
-          <div className="blog-grid">
-            {rest.map(p => (
+          <div className="blog-grid" style={{ marginTop: 64 }}>
+            {posts.map((p) => (
               <Link key={p.slug} href={`/blog/${p.slug}`} className="blog-card">
-                <div className="blog-card-image" style={{ backgroundImage: `url(${p.cover})` }} />
-                <div className="blog-card-meta">{p.category} — {p.readTime}</div>
+                <div
+                  className="blog-card-image"
+                  style={{ backgroundImage: `url(${p.cover})`, borderRadius: '2px' }}
+                />
+                <div className="blog-card-meta">
+                  {p.category} — {p.readTime}
+                </div>
                 <h3>{p.title}</h3>
                 <p>{p.excerpt}</p>
               </Link>
@@ -43,15 +44,21 @@ export default function Blog() {
         </div>
       </section>
 
-      <section className="section dark" style={{ textAlign: 'center' }}>
-        <div className="section-inner" style={{ maxWidth: 620 }}>
+      {/* Unified Newsletter Section */}
+      <section className="section dark reveal" style={{ textAlign: "center" }}>
+        <div className="section-inner" style={{ maxWidth: 700 }}>
           <div className="section-eyebrow">The ARK Letter</div>
-          <h2 style={{ marginBottom: 18 }}>A quiet monthly dispatch.</h2>
-          <p style={{ color: '#bfbab0', marginBottom: 40 }}>
-            One essay, once a month, from our partners. No noise, no sales, no tracking links — a letter, in the old sense of the word.
+          <h2 style={{ marginBottom: 24, color: "var(--ark-ivory)" }}>A monthly dispatch on craft.</h2>
+          <p style={{ color: "rgba(255,255,255,0.6)", marginBottom: 48, fontSize: 18, fontWeight: 300 }}>
+            One essay, once a month. No noise, no marketing, just ideas that matter.
           </p>
-          <form className="newsletter-form" action="#" method="post">
-            <input type="email" placeholder="you@domain.com" required />
+          <form className="newsletter-form" action={submitNewsletter}>
+            <input
+              type="email"
+              name="email"
+              placeholder="Your email address"
+              required
+            />
             <button type="submit">Subscribe</button>
           </form>
         </div>
