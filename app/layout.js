@@ -142,8 +142,10 @@ export default async function RootLayout({ children }) {
               // ---------- Animated counters ----------
               const easeOut = (t) => 1 - Math.pow(1 - t, 3);
               const runCounter = (el) => {
+                if (el.dataset.counted === '1') return;
                 const target = parseFloat(el.dataset.count);
                 if (isNaN(target)) return;
+                el.dataset.counted = '1';
                 const decimals = parseInt(el.dataset.decimals || '0', 10);
                 const prefix = el.dataset.prefix || '';
                 const suffix = el.dataset.suffix || '';
@@ -198,7 +200,7 @@ export default async function RootLayout({ children }) {
 
               const scan = () => {
                 document.querySelectorAll('.reveal:not(.active)').forEach((el) => revealObserver.observe(el));
-                document.querySelectorAll('[data-count]').forEach((el) => counterObserver.observe(el));
+                document.querySelectorAll('[data-count]:not([data-counted])').forEach((el) => counterObserver.observe(el));
               };
 
               const init = () => { scan(); onScroll(); };
@@ -215,8 +217,12 @@ export default async function RootLayout({ children }) {
                 }
               });
 
-              // Re-scan on client route changes
-              const mo = new MutationObserver(() => scan());
+              // Re-scan on client route changes (debounced; ignore our own text mutations)
+              let scanTimer = null;
+              const mo = new MutationObserver(() => {
+                if (scanTimer) return;
+                scanTimer = setTimeout(() => { scanTimer = null; scan(); }, 200);
+              });
               mo.observe(document.body, { childList: true, subtree: true });
             })();
           `}
