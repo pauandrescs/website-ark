@@ -95,7 +95,7 @@ export default async function RootLayout({ children }) {
       <head>
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
-        <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Playfair+Display:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet" />
+        <link href="https://fonts.googleapis.com/css2?family=Google+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Playfair+Display:ital,wght@0,400;0,500;0,700;1,400&display=swap" rel="stylesheet" />
         <script
           async
           src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-XXXXXXXXXXXXXXXX"
@@ -107,6 +107,10 @@ export default async function RootLayout({ children }) {
         />
       </head>
       <body suppressHydrationWarning>
+        <div className="scroll-progress" aria-hidden="true"><span /></div>
+        <button className="back-to-top" aria-label="Back to top" type="button">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round"><path d="M12 19V5M5 12l7-7 7 7" /></svg>
+        </button>
         <Providers session={session}>
           <ConditionalHeader />
           <main>{children}</main>
@@ -116,36 +120,105 @@ export default async function RootLayout({ children }) {
         </Providers>
         <Script id="reveal-animations" strategy="afterInteractive">
           {`
-            const observerOptions = { threshold: 0.1, rootMargin: '0px 0px -50px 0px' };
-            const observer = new IntersectionObserver((entries) => {
-              entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                  entry.target.classList.add('active');
-                  observer.unobserve(entry.target);
+            (function () {
+              const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+              // ---------- Scroll reveal + staggered children ----------
+              const revealObserver = new IntersectionObserver((entries) => {
+                entries.forEach((entry) => {
+                  if (!entry.isIntersecting) return;
+                  const el = entry.target;
+                  el.classList.add('active');
+                  // stagger direct .stagger-item descendants
+                  const items = el.querySelectorAll('[data-stagger] > *, .stagger-item');
+                  items.forEach((child, i) => {
+                    child.style.transitionDelay = (i * 90) + 'ms';
+                    child.classList.add('active');
+                  });
+                  revealObserver.unobserve(el);
+                });
+              }, { threshold: 0.12, rootMargin: '0px 0px -60px 0px' });
+
+              // ---------- Animated counters ----------
+              const easeOut = (t) => 1 - Math.pow(1 - t, 3);
+              const runCounter = (el) => {
+                const target = parseFloat(el.dataset.count);
+                if (isNaN(target)) return;
+                const decimals = parseInt(el.dataset.decimals || '0', 10);
+                const prefix = el.dataset.prefix || '';
+                const suffix = el.dataset.suffix || '';
+                if (reduce) { el.textContent = prefix + target.toFixed(decimals) + suffix; return; }
+                const dur = 1600; const start = performance.now();
+                const tick = (now) => {
+                  const p = Math.min((now - start) / dur, 1);
+                  const val = target * easeOut(p);
+                  el.textContent = prefix + val.toFixed(decimals) + suffix;
+                  if (p < 1) requestAnimationFrame(tick);
+                };
+                requestAnimationFrame(tick);
+              };
+              const counterObserver = new IntersectionObserver((entries) => {
+                entries.forEach((entry) => {
+                  if (!entry.isIntersecting) return;
+                  runCounter(entry.target);
+                  counterObserver.unobserve(entry.target);
+                });
+              }, { threshold: 0.6 });
+
+              // ---------- Parallax + header state + scroll progress ----------
+              const parallaxEls = () => Array.from(document.querySelectorAll('[data-parallax]'));
+              const progressBar = document.querySelector('.scroll-progress span');
+              const header = () => document.querySelector('.header');
+              let ticking = false;
+              const onScroll = () => {
+                if (ticking) return;
+                ticking = true;
+                requestAnimationFrame(() => {
+                  const y = window.scrollY;
+                  if (progressBar) {
+                    const h = document.documentElement.scrollHeight - window.innerHeight;
+                    progressBar.style.transform = 'scaleX(' + (h > 0 ? y / h : 0) + ')';
+                  }
+                  const hd = header();
+                  if (hd) hd.classList.toggle('scrolled', y > 40);
+                  const btt = document.querySelector('.back-to-top');
+                  if (btt) btt.classList.toggle('show', y > 600);
+                  if (!reduce) {
+                    parallaxEls().forEach((el) => {
+                      const speed = parseFloat(el.dataset.parallax) || 0.15;
+                      // only apply while element is roughly in view
+                      if (y < window.innerHeight * 1.2) {
+                        el.style.transform = 'translate3d(0,' + (y * speed) + 'px,0)';
+                      }
+                    });
+                  }
+                  ticking = false;
+                });
+              };
+
+              const scan = () => {
+                document.querySelectorAll('.reveal:not(.active)').forEach((el) => revealObserver.observe(el));
+                document.querySelectorAll('[data-count]').forEach((el) => counterObserver.observe(el));
+              };
+
+              const init = () => { scan(); onScroll(); };
+              if (document.readyState === 'loading') {
+                document.addEventListener('DOMContentLoaded', init);
+              } else { init(); }
+              window.addEventListener('scroll', onScroll, { passive: true });
+              window.addEventListener('resize', onScroll, { passive: true });
+
+              // Back to top
+              document.addEventListener('click', (e) => {
+                if (e.target.closest('.back-to-top')) {
+                  window.scrollTo({ top: 0, behavior: reduce ? 'auto' : 'smooth' });
                 }
               });
-            }, observerOptions);
 
-            const observeElements = () => {
-              document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
-            };
-
-            if (document.readyState === 'loading') {
-              document.addEventListener('DOMContentLoaded', observeElements);
-            } else {
-              observeElements();
-            }
-
-            // Handle Next.js route changes
-            const targetNode = document.querySelector('body');
-            const config = { childList: true, subtree: true };
-            const callback = (mutationsList) => {
-              for(const mutation of mutationsList) {
-                if (mutation.type === 'childList') observeElements();
-              }
-            };
-            const mutationObserver = new MutationObserver(callback);
-            mutationObserver.observe(targetNode, config);
+              // Re-scan on client route changes
+              const mo = new MutationObserver(() => scan());
+              mo.observe(document.body, { childList: true, subtree: true });
+            })();
           `}
         </Script>
       </body>

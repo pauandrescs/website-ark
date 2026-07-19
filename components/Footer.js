@@ -1,138 +1,140 @@
 import Link from 'next/link';
 import NewsletterForm from './NewsletterForm';
 
+const COLUMNS = [
+  {
+    title: 'Platform',
+    links: [
+      { href: '/software', label: 'Software & Platforms' },
+      { href: '/hotels', label: 'Hospitality' },
+      { href: '/real-estate', label: 'Real Estate' },
+      { href: '/finance', label: 'Finance & Advisory' },
+      { href: '/design', label: 'Design & Product' },
+    ],
+  },
+  {
+    title: 'Investors',
+    links: [
+      { href: '/contact', label: 'Request the Deck' },
+      { href: '/contact', label: 'Book a Call' },
+      { href: '/about', label: 'The Thesis' },
+      { href: '/audits', label: 'Audits & Reporting' },
+      { href: '/blog', label: 'Journal' },
+    ],
+  },
+  {
+    title: 'Company',
+    links: [
+      { href: '/about', label: 'About ARK' },
+      { href: '/contact', label: 'Contact' },
+      { href: '/login', label: 'Investor Login' },
+      { href: '/register', label: 'Request Access' },
+    ],
+  },
+];
+
+const LEGAL = [
+  { href: '/terms', label: 'Terms' },
+  { href: '/privacy', label: 'Privacy' },
+  { href: '/cookies', label: 'Cookies' },
+  { href: '/data-protection', label: 'Data Protection' },
+  { href: '/gdpr', label: 'GDPR' },
+  { href: '/accessibility', label: 'Accessibility' },
+];
+
+const SOCIALS = [
+  {
+    href: 'https://linkedin.com/company/arkplatforms',
+    label: 'LinkedIn',
+    icon: 'M4.98 3.5a2.5 2.5 0 11-.02 5 2.5 2.5 0 01.02-5zM3 8.98h4v12H3v-12zM9 8.98h3.8v1.64h.05c.53-.95 1.83-1.95 3.77-1.95 4.03 0 4.78 2.5 4.78 5.75v6.56h-4v-5.82c0-1.39-.03-3.17-2-3.17-2 0-2.3 1.5-2.3 3.06v5.93H9v-12z',
+  },
+  {
+    href: 'https://twitter.com/arkplatforms',
+    label: 'X',
+    icon: 'M18.9 2H22l-7.1 8.1L23.2 22h-6.6l-5.2-6.8L5.5 22H2.4l7.6-8.7L1.2 2h6.8l4.7 6.2L18.9 2zm-1.2 18h1.8L7.1 3.9H5.2L17.7 20z',
+  },
+  {
+    href: 'https://instagram.com/arkplatforms',
+    label: 'Instagram',
+    icon: 'M12 2.2c3.2 0 3.6 0 4.8.07 1.2.06 1.8.25 2.2.42.56.22.96.48 1.38.9.42.42.68.82.9 1.38.17.4.36 1 .42 2.2.07 1.2.07 1.6.07 4.8s0 3.6-.07 4.8c-.06 1.2-.25 1.8-.42 2.2a3.7 3.7 0 01-.9 1.38 3.7 3.7 0 01-1.38.9c-.4.17-1 .36-2.2.42-1.2.07-1.6.07-4.8.07s-3.6 0-4.8-.07c-1.2-.06-1.8-.25-2.2-.42a3.7 3.7 0 01-1.38-.9 3.7 3.7 0 01-.9-1.38c-.17-.4-.36-1-.42-2.2C2.2 15.6 2.2 15.2 2.2 12s0-3.6.07-4.8c.06-1.2.25-1.8.42-2.2.22-.56.48-.96.9-1.38.42-.42.82-.68 1.38-.9.4-.17 1-.36 2.2-.42C8.4 2.2 8.8 2.2 12 2.2zm0 3.05A6.75 6.75 0 1012 18.75 6.75 6.75 0 0012 5.25zm0 11.13A4.38 4.38 0 1112 7.6a4.38 4.38 0 010 8.78zm6.9-11.4a1.58 1.58 0 11-3.15 0 1.58 1.58 0 013.15 0z',
+  },
+];
+
 export default function Footer() {
   return (
     <footer className="footer">
+      <div className="footer-accent" aria-hidden="true" />
       <div className="footer-inner">
-        <div className="footer-grid">
+
+        <div className="footer-top">
           <div className="footer-brand">
-            <span className="logo">ARK<span style={{ color: '#b89b5e' }}>.</span>PLATFORMS</span>
-            <p>A multidisciplinary studio engineering software, spaces, and strategies for clients who expect nothing less than excellence.</p>
-            <div style={{ marginTop: 24, lineHeight: 1.7, color: '#bfbab0' }}>
-              <strong>Contact</strong>
-              <div>info@arkplatforms.eu</div>
-              <div>+34 91 123 4567</div>
-              <div>Madrid · Lisboa · London</div>
+            <span className="logo">ARK<span>.</span>PLATFORMS</span>
+            <p>
+              A diversified investment platform building and operating companies
+              across software, hospitality, and real estate — engineered for
+              durable, long-term returns.
+            </p>
+            <div className="footer-contact">
+              <a href="mailto:info@arkplatforms.eu">info@arkplatforms.eu</a>
+              <span>Madrid · Lisboa · London</span>
             </div>
           </div>
-          <div className="footer-col">
-            <h4>Technology</h4>
-            <ul>
-              <li><Link href="/software">Software Development</Link></li>
-              <li><Link href="/apps">Mobile Apps</Link></li>
-              <li><Link href="/webs">Web Platforms</Link></li>
-              <li><Link href="/uiux">UI / UX Design</Link></li>
-              <li><Link href="/ai-automation">AI & Automation</Link></li>
-              <li><Link href="/infrastructure">Infrastructure & DevOps</Link></li>
-            </ul>
-          </div>
-          <div className="footer-col">
-            <h4>Assets</h4>
-            <ul>
-              <li><Link href="/real-estate">Real Estate</Link></li>
-              <li><Link href="/hotels">Hotels</Link></li>
-              <li><Link href="/finance">Finance</Link></li>
-              <li><Link href="/audits">Audits</Link></li>
-              <li><Link href="/contact">Capital Advisory</Link></li>
-            </ul>
-          </div>
-          <div className="footer-col">
-            <h4>Education</h4>
-            <ul>
-              <li><Link href="/courses">Courses</Link></li>
-              <li><Link href="/courses#mentorship">Mentorship</Link></li>
-              <li><Link href="/courses#workshops">Workshops</Link></li>
-              <li><Link href="/blog">Journal</Link></li>
-            </ul>
-          </div>
-          <div className="footer-col">
-            <h4>Company</h4>
-            <ul>
-              <li><Link href="/about">About</Link></li>
-              <li><Link href="/authors">Contributors</Link></li>
-              <li><Link href="/contribute">Write for ARK</Link></li>
-              <li><Link href="/contact">Contact</Link></li>
-              <li><Link href="/login">Sign In</Link></li>
-              <li><Link href="/register">Join</Link></li>
-            </ul>
-          </div>
-        </div>
 
-        <div className="footer-extra" style={{ marginTop: 48 }}>
-          <div className="footer-extra-col" style={{ marginBottom: 30, maxWidth: 420 }}>
+          <div className="footer-news">
             <h4>The ARK Letter</h4>
-            <p style={{ color: '#bfbab0', fontSize: 14, lineHeight: 1.8, marginBottom: 12 }}>
-              Monthly dispatches from our partners covering strategic insights on product design, real estate development, financial stewardship, and operating excellence. Crafted for operators, investors, and builders who think in decades.
-            </p>
-            <p style={{ color: '#7a7a7a', fontSize: 13, lineHeight: 1.6, marginBottom: 16 }}>
-              One essay, once a month. No marketing, no noise, no data collection. Just ideas worth thinking about.
-            </p>
+            <p>A quarterly note on capital allocation and operating discipline. No noise, no marketing.</p>
             <NewsletterForm />
           </div>
-          <div className="footer-extra-col" style={{ marginBottom: 30 }}>
-            <h4>Why ARK</h4>
-            <ul style={{ color: '#bfbab0', fontSize: 14 }}>
-              <li style={{ marginBottom: 8 }}>Small, senior-led teams</li>
-              <li style={{ marginBottom: 8 }}>Confidential, long-term work</li>
-              <li style={{ marginBottom: 8 }}>Cross-practice collaboration</li>
-              <li>Ideas that are built to last</li>
-            </ul>
-          </div>
-          <div className="footer-extra-col" style={{ marginBottom: 30 }}>
-            <h4>Community</h4>
-            <ul style={{ color: '#bfbab0', fontSize: 14 }}>
-              <li style={{ marginBottom: 8 }}><Link href="https://twitter.com/arkplatforms" target="_blank" rel="noopener noreferrer" style={{ color: '#b89b5e', textDecoration: 'none' }}>Twitter / X</Link></li>
-              <li style={{ marginBottom: 8 }}><Link href="https://instagram.com/arkplatforms" target="_blank" rel="noopener noreferrer" style={{ color: '#b89b5e', textDecoration: 'none' }}>Instagram</Link></li>
-              <li style={{ marginBottom: 8 }}><Link href="https://linkedin.com/company/arkplatforms" target="_blank" rel="noopener noreferrer" style={{ color: '#b89b5e', textDecoration: 'none' }}>LinkedIn</Link></li>
-              <li><Link href="/blog" style={{ color: '#b89b5e', textDecoration: 'none' }}>Follow the Journal</Link></li>
-            </ul>
-          </div>
         </div>
 
-        <div style={{ borderTop: '1px solid #2a2a2a', marginTop: 40, paddingTop: 40 }}>
-          <div className="footer-legal">
-            <h4 style={{ marginBottom: 20 }}>Legal</h4>
-            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: 30 }}>
-              <div>
-                <h5 style={{ fontSize: 14, fontWeight: 600, marginBottom: 12, color: 'var(--ark-ivory)' }}>Terms & Policies</h5>
-                <ul style={{ color: '#bfbab0', fontSize: 13, lineHeight: 1.8 }}>
-                  <li><Link href="/terms" style={{ color: '#b89b5e', textDecoration: 'none' }}>Terms and Conditions</Link></li>
-                  <li><Link href="/privacy" style={{ color: '#b89b5e', textDecoration: 'none' }}>Privacy Policy</Link></li>
-                  <li><Link href="/cookies" style={{ color: '#b89b5e', textDecoration: 'none' }}>Cookie Policy</Link></li>
-                  <li><Link href="/data-protection" style={{ color: '#b89b5e', textDecoration: 'none' }}>Data Protection</Link></li>
-                </ul>
-              </div>
-              <div>
-                <h5 style={{ fontSize: 14, fontWeight: 600, marginBottom: 12, color: 'var(--ark-ivory)' }}>Accessibility</h5>
-                <ul style={{ color: '#bfbab0', fontSize: 13, lineHeight: 1.8 }}>
-                  <li><Link href="/accessibility" style={{ color: '#b89b5e', textDecoration: 'none' }}>Accessibility Statement</Link></li>
-                  <li><Link href="/wcag" style={{ color: '#b89b5e', textDecoration: 'none' }}>WCAG 2.1 Compliance</Link></li>
-                  <li><Link href="/reports" style={{ color: '#b89b5e', textDecoration: 'none' }}>Accessibility Reports</Link></li>
-                  <li><Link href="/feedback" style={{ color: '#b89b5e', textDecoration: 'none' }}>Report an Issue</Link></li>
-                </ul>
-              </div>
-              <div>
-                <h5 style={{ fontSize: 14, fontWeight: 600, marginBottom: 12, color: 'var(--ark-ivory)' }}>Compliance</h5>
-                <ul style={{ color: '#bfbab0', fontSize: 13, lineHeight: 1.8 }}>
-                  <li><Link href="/gdpr" style={{ color: '#b89b5e', textDecoration: 'none' }}>GDPR Compliance</Link></li>
-                  <li><Link href="/ccpa" style={{ color: '#b89b5e', textDecoration: 'none' }}>CCPA & Privacy Rights</Link></li>
-                  <li><Link href="/soc2" style={{ color: '#b89b5e', textDecoration: 'none' }}>SOC 2 Certification</Link></li>
-                  <li><Link href="/audits" style={{ color: '#b89b5e', textDecoration: 'none' }}>Security Audits</Link></li>
-                </ul>
-              </div>
+        <div className="footer-cols">
+          {COLUMNS.map((col) => (
+            <div key={col.title} className="footer-col">
+              <h4>{col.title}</h4>
+              <ul>
+                {col.links.map((l) => (
+                  <li key={l.label}>
+                    <Link href={l.href}>{l.label}</Link>
+                  </li>
+                ))}
+              </ul>
             </div>
+          ))}
+
+          <div className="footer-col">
+            <h4>Connect</h4>
+            <div className="footer-social">
+              {SOCIALS.map((s) => (
+                <a
+                  key={s.label}
+                  href={s.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label={s.label}
+                >
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                    <path d={s.icon} />
+                  </svg>
+                </a>
+              ))}
+            </div>
+            <Link href="/contact" className="footer-cta-link">
+              Request the Deck →
+            </Link>
           </div>
         </div>
 
-        <div className="footer-bottom" style={{ borderTop: '1px solid #2a2a2a', marginTop: 40, paddingTop: 30, display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: 20 }}>
-          <div style={{ color: '#bfbab0', fontSize: 13 }}>
-            © {new Date().getFullYear()} ARK Platforms, Inc. All rights reserved. Designed and engineered with discipline.
+        <div className="footer-bottom">
+          <div className="footer-legal-links">
+            {LEGAL.map((l) => (
+              <Link key={l.label} href={l.href}>{l.label}</Link>
+            ))}
           </div>
-          <div style={{ color: '#bfbab0', fontSize: 13 }}>
-            Based in Madrid, Lisboa, and London.
+          <div className="footer-copy">
+            © {new Date().getFullYear()} ARK Platforms, Inc. — All rights reserved.
           </div>
         </div>
+
       </div>
     </footer>
   );
