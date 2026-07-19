@@ -54,7 +54,7 @@ h1, h2, h3, h4 {
   padding: 20px 40px;
 }
 .logo {
-  font-family: 'Playfair Display', Georgia, serif;
+  font-family: 'Google Sans', sans-serif;
   font-size: 24px; letter-spacing: 0.1em;
   color: var(--ark-ivory);
   text-transform: uppercase;
