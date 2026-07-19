@@ -9,6 +9,7 @@ const PRIMARY_NAV = [
   { href: '/design', label: 'Design' },
   { href: '/real-estate', label: 'Real Estate' },
   { href: '/hotels', label: 'Hotels' },
+  { href: '/music', label: 'Music' },
   { href: '/finance', label: 'Finance' },
   { href: '/audits', label: 'Audits' },
   { href: '/courses', label: 'Courses' },

@@ -1523,6 +1523,38 @@ a { color: inherit; text-decoration: none; }
   .type-aa { font-size: 72px; }
 }
 
+/* ============ MUSIC: ROYALTY SPLIT ============ */
+.royalty-grid { display: grid; grid-template-columns: 2fr 1fr; gap: 20px; }
+.royalty-card { border-radius: 8px; padding: 48px 44px; position: relative; overflow: hidden; }
+.royalty-card.you { background: linear-gradient(150deg, var(--ark-gold-light), var(--ark-gold)); color: var(--ark-black); }
+.royalty-card.us { background: var(--ark-charcoal); border: 1px solid rgba(255,255,255,0.1); color: var(--ark-ivory); }
+.royalty-pct { font-family: 'Playfair Display', Georgia, serif; font-size: clamp(72px, 12vw, 140px); line-height: 0.9; letter-spacing: -0.03em; }
+.royalty-card.us .royalty-pct { color: var(--ark-gold); }
+.royalty-who { font-size: 12px; letter-spacing: 0.3em; text-transform: uppercase; font-weight: 700; margin-top: 8px; }
+.royalty-desc { font-size: 15px; font-weight: 400; margin-top: 18px; max-width: 420px; line-height: 1.6; opacity: 0.9; }
+.royalty-card.us .royalty-desc { color: rgba(255,255,255,0.55); }
+
+/* ============ MUSIC: PLAYER CARD ============ */
+.music-player { border-radius: 16px; background: linear-gradient(165deg, #1c1c1e, #0b0b0c); border: 1px solid rgba(197,163,93,0.22); padding: 26px; box-shadow: 0 50px 100px rgba(0,0,0,0.55); }
+.mp-cover { aspect-ratio: 1/1; border-radius: 12px; margin-bottom: 22px; position: relative; overflow: hidden; background: radial-gradient(120% 120% at 20% 15%, var(--ark-gold-light), var(--ark-gold) 35%, #6f5a2c 80%); display: flex; align-items: center; justify-content: center; }
+.mp-cover svg { color: rgba(0,0,0,0.5); }
+.mp-title { font-size: 20px; color: var(--ark-ivory); font-weight: 600; }
+.mp-artist { font-size: 13px; color: var(--ark-gold); letter-spacing: 0.1em; text-transform: uppercase; margin-top: 4px; margin-bottom: 20px; font-weight: 600; }
+.mp-progress { height: 4px; border-radius: 4px; background: rgba(255,255,255,0.12); overflow: hidden; }
+.mp-progress span { display: block; height: 100%; width: 42%; background: var(--ark-gold); border-radius: 4px; }
+.mp-times { display: flex; justify-content: space-between; font-size: 11px; color: rgba(255,255,255,0.4); margin-top: 8px; font-variant-numeric: tabular-nums; }
+.mp-controls { display: flex; align-items: center; justify-content: center; gap: 26px; margin-top: 18px; color: var(--ark-ivory); }
+.mp-play { width: 52px; height: 52px; border-radius: 50%; background: var(--ark-gold); color: var(--ark-black); display: flex; align-items: center; justify-content: center; }
+.eq { display: flex; gap: 3px; align-items: flex-end; height: 26px; margin-top: 22px; justify-content: center; }
+.eq span { width: 4px; height: 30%; background: var(--ark-gold); border-radius: 3px; animation: eq 900ms ease-in-out infinite; }
+.eq span:nth-child(2){animation-delay:.15s} .eq span:nth-child(3){animation-delay:.30s} .eq span:nth-child(4){animation-delay:.45s} .eq span:nth-child(5){animation-delay:.60s} .eq span:nth-child(6){animation-delay:.75s} .eq span:nth-child(7){animation-delay:.20s} .eq span:nth-child(8){animation-delay:.50s} .eq span:nth-child(9){animation-delay:.35s} .eq span:nth-child(10){animation-delay:.10s}
+@keyframes eq { 0%,100% { height: 20%; } 50% { height: 100%; } }
+
+@media (max-width: 1024px) {
+  .royalty-grid { grid-template-columns: 1fr; }
+  .music-player { max-width: 420px; }
+}
+
 /* ============ REDUCED MOTION ============ */
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after {
@@ -1541,6 +1573,7 @@ a { color: inherit; text-decoration: none; }
   .presence-ping { animation: none !important; opacity: 0 !important; }
   .back-to-top { transition: opacity .2s !important; }
   .code-body .ln { opacity: 1 !important; transform: none !important; animation: none !important; }
+  .eq span { animation: none !important; height: 60% !important; }
 }
 
 @media (max-width: 1024px) {

@@ -7,6 +7,7 @@ const COLUMNS = [
     links: [
       { href: '/software', label: 'Software & Platforms' },
       { href: '/hotels', label: 'Hospitality' },
+      { href: '/music', label: 'Music — ARK Records' },
       { href: '/real-estate', label: 'Real Estate' },
       { href: '/finance', label: 'Finance & Advisory' },
       { href: '/design', label: 'Design & Product' },

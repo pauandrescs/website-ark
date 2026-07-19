@@ -39,12 +39,19 @@ const portfolio = [
     bg: "https://images.unsplash.com/photo-1526304640581-d334cdbbf45e?auto=format&fit=crop&w=1800&q=80",
   },
   {
-    cls: "medium",
+    cls: "small",
     label: "Design & Product",
     title: "Brand and product equity, in-house",
-    desc: "A design practice that raises the value of every company we build and every asset we operate.",
     href: "/design",
-    bg: "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?auto=format&fit=crop&w=1800&q=80",
+    bg: "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?auto=format&fit=crop&w=1400&q=80",
+  },
+  {
+    cls: "large",
+    label: "Music — ARK Records",
+    title: "Your music, everywhere — and 80% of the royalties",
+    desc: "We distribute your tracks to 150+ platforms, pitch and market them, and pay you 80% while you keep your masters.",
+    href: "/music",
+    bg: "https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?auto=format&fit=crop&w=2000&q=80",
   },
 ];
 
