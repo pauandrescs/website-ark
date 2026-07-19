@@ -1,5 +1,6 @@
 import Link from "next/link";
-import WorldMap, { geo } from "../components/WorldMap";
+import WorldMap from "../components/WorldMap";
+import { geo } from "../lib/worldMapPath";
 import { posts } from "../lib/posts";
 import { submitNewsletter } from "../lib/actions";
 

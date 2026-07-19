@@ -1,5 +1,6 @@
 import Link from "next/link";
-import WorldMap, { geo } from "../../components/WorldMap";
+import WorldMap from "../../components/WorldMap";
+import { geo } from "../../lib/worldMapPath";
 
 export const metadata = {
   title: "Real Estate — ARK Platforms",
