@@ -1,4 +1,5 @@
 import Link from "next/link";
+import WorldMap, { geo } from "../components/WorldMap";
 import { posts } from "../lib/posts";
 import { submitNewsletter } from "../lib/actions";
 
@@ -134,13 +135,17 @@ const compareRows = [
 ];
 
 const cities = [
-  { name: "Madrid", meta: "Headquarters" },
-  { name: "Lisboa", meta: "Operations" },
-  { name: "London", meta: "Capital Markets" },
-  { name: "Dubai", meta: "Hospitality" },
-  { name: "Zürich", meta: "Advisory" },
-  { name: "Austin", meta: "Software" },
+  { name: "Madrid", meta: "Headquarters", lat: 40.4, lon: -3.7 },
+  { name: "Lisboa", meta: "Operations", lat: 38.7, lon: -9.1 },
+  { name: "London", meta: "Capital Markets", lat: 51.5, lon: -0.1 },
+  { name: "Dubai", meta: "Hospitality", lat: 25.2, lon: 55.3 },
+  { name: "Zürich", meta: "Advisory", lat: 47.4, lon: 8.5 },
+  { name: "Austin", meta: "Software", lat: 30.3, lon: -97.7 },
+  { name: "Singapore", meta: "APAC", lat: 1.35, lon: 103.8 },
+  { name: "New York", meta: "Capital Markets", lat: 40.7, lon: -74.0 },
 ];
+
+const presenceMarkers = cities.map((c) => ({ ...geo(c.lat, c.lon), label: c.name }));
 
 const investSteps = [
   { t: "Introduction", d: "Request the deck and complete a short suitability review with our team." },
@@ -541,24 +546,7 @@ export default function Home() {
           </p>
           <div className="presence">
             <div className="presence-map">
-              <svg viewBox="0 0 400 250" preserveAspectRatio="xMidYMid meet" aria-hidden="true">
-                <g stroke="rgba(197,163,93,0.15)" strokeWidth="0.5" fill="none">
-                  {Array.from({ length: 9 }).map((_, i) => (
-                    <line key={`h${i}`} x1="0" y1={i * 31} x2="400" y2={i * 31} />
-                  ))}
-                  {Array.from({ length: 13 }).map((_, i) => (
-                    <line key={`v${i}`} x1={i * 33} y1="0" x2={i * 33} y2="250" />
-                  ))}
-                </g>
-                {[
-                  [186, 96], [180, 108], [196, 84], [268, 120], [204, 92], [70, 110],
-                ].map(([x, y], i) => (
-                  <g key={i}>
-                    <circle className="presence-ping" cx={x} cy={y} r="3" style={{ animationDelay: `${i * 0.4}s` }} />
-                    <circle className="presence-dot" cx={x} cy={y} r="3" />
-                  </g>
-                ))}
-              </svg>
+              <WorldMap markers={presenceMarkers} />
             </div>
             <div className="presence-cities">
               {cities.map((c) => (
